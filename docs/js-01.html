@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="reveal/css/reset.css">
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="reveal/lib/css/monokai.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Parameter - by reference</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function reset(o) {
+    o = null;
+}
+
+var x = [];
+reset(x);
+
+console.log(x);
+			</code></pre>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+null
+[]
+undefined
+throw
+				</code></pre>
+        </section>
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Parameters - by reference</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function swap(a, b) {
+    var temp = a;
+    a = b;
+    b = temp
+}
+var x = 1, y = 2;
+swap(x, y);
+
+console.log(x);
+			</code></pre>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+1
+2
+undefined
+throw
+				</code></pre>
+        </section>
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Code style</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo()
+{
+  // ...
+}
+			</code></pre>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo() {
+  // ...
+}
+				</code></pre>
+        </section>
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Code style</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo()
+{
+  return
+  {
+    ok: false
+  }
+}
+			</code></pre>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo() {
+  return {
+    ok: true
+  }
+}
+				</code></pre>
+        </section>
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Code style</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo()
+{
+  return
+  {
+    ok: false
+  }
+}
+			</code></pre>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo() {
+  return {
+    ok: true
+  }
+}
+				</code></pre>
+        </section>
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Just Don't</h3>
+            <pre><code class="hljs javascript" data-trim>
+var a = b = 0;
+			</code></pre>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+var a = 0, b = 0;
+var a = (b = 0);
+				</code></pre>
+        </section>
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Just Don't</h3>
+            <pre><code class="hljs javascript" data-trim>
+if (a) b(); c();
+			</code></pre>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+if (a) {b(); c();}
+if (a) {b();} c();
+				</code></pre>
+        </section>
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Just Don't</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+(function() {
+  var x = "x",
+  y = "y";
+})();
+			</code></pre>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+(function() {
+  var x = 'x';
+  y = "y";
+})();
+				</code></pre>
+			<aside class="notes">
+				1. ' vs "
+				2. local variable, this vs globalThis
+			</aside>
+        </section>
+    </div>
+</div>
+
+<script src="reveal/js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+
+        transition: 'slide',
+
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/notes/notes.js', async: true},
+            {src: 'plugin/highlight/highlight.js', async: true}
+        ]
+    });
+</script>
+</body>
+</html>
