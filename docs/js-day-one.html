@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>JavaScript - Day One</title>
+
+    <link rel="stylesheet" href="reveal/css/reset.css">
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="reveal/lib/css/monokai.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>Just</h1>
+            <h3>Don't</h3>
+            <pre><code class="hljs javascript" data-trim>
+var a = b = 0;
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+var a = 0, b = 0;
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+var a = (b = 0);
+			</code></pre>
+        </section>
+        <section>
+            <h1>Just</h1>
+            <h3>Don't</h3>
+            <pre><code class="hljs javascript" data-trim>
+if (a) b(); c();
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+if (a) {b();  c();}
+if (a) {b();} c();
+				</code></pre>
+        </section>
+        <section>
+            <h1>Object</h1>
+            <h3>keys</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+var obj = {};
+obj[[]] = "value";
+Object.keys(obj);
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+0
+[]
+[[]]
+[""]
+			</code></pre>
+        </section>
+        <section>
+            <h1>Number</h1>
+            <h3>Precision</h3>
+            <pre><code class="hljs javascript" data-trim>
+0.1 + 0.2 === 0.3 // false
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+0.1 + 0.2 === 0.30000000000000004 // true
+			</code></pre>
+        </section>
+        <section>
+            <h1>Number</h1>
+            <h3>Precision</h3>
+            <pre><code class="hljs javascript" data-trim>
+1 === 1.000000000000001 // false
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+1 === 1.0000000000000001 // true
+			</code></pre>
+        </section>
+        <section>
+            <h1>Number</h1>
+            <h3>Safe bounds</h3>
+            <pre><code class="hljs javascript" data-trim>
+Number.MAX_SAFE_INTEGER // 9007199254740991
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+Number.MAX_SAFE_INTEGER + 1 === Number.MAX_SAFE_INTEGER + 2 // true
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+Number.MAX_SAFE_INTEGER + 0 // 9007199254740991
+Number.MAX_SAFE_INTEGER + 1 // 9007199254740992
+Number.MAX_SAFE_INTEGER + 2 // 9007199254740992
+Number.MAX_SAFE_INTEGER + 3 // 9007199254740994
+Number.MAX_SAFE_INTEGER + 4 // 9007199254740996
+Number.MAX_SAFE_INTEGER + 5 // 9007199254740996
+Number.MAX_SAFE_INTEGER + 6 // 9007199254740996
+Number.MAX_SAFE_INTEGER + 7 // 9007199254740998
+			</code></pre>
+        </section>
+        <section>
+            <h1>Number</h1>
+            <h3>Literal</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers="">
+0, 117, -345, 123456789123456789n             (decimal, base 10)
+015, 0001, -0o77, 0o777777777777n             (octal, base 8)
+0x1123, 0x00111, -0xF1A7, 0x123456789ABCDEFn  (hexadecimal, "hex" or base 16)
+0b11, 0b0011, -0b11, 0b11101001010101010101n  (binary, base 2)
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers="">
+3.1415926
+-.123456789
+-3.1E+12
+.1e-23
+			</code></pre>
+        </section>
+        <section>
+            <h1>Array</h1>
+            <h3>Literal</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers="">
+[]
+[1,2,3]
+[1,,3]
+			</code></pre>
+            <p class="fragment">Try at home</p>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+[1,,3,]
+			</code></pre>
+        </section>
+        <section>
+            <h1>Array</h1>
+            <h3>Element deletion</h3>
+            <pre><code class="hljs javascript" data-trim>
+var arr = [1,2,3];
+delete arr[1];
+arr;
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+[1, undefined, 3] // SpiderMonkey
+[1, empty, 3] // V8
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+arr.splice(1, 1);
+
+// [undefined] // SpiderMonkey
+// [empty] // V8
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+[1, 3]
+			</code></pre>
+        </section>
+        <section>
+            <h1>Array</h1>
+            <h3>Empty Elements</h3>
+            <pre><code class="hljs javascript" data-trim>
+var arr = [1,2,3];
+arr[5] = "Hello there!";
+arr;
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+[1, 2, 3, undefined, undefined, "Hello there!"] // SpiderMonkey
+[1, 2, 3, empty × 2, "Hello there!"] // V8
+			</code></pre>
+        </section>
+        <section>
+            <h1>Array</h1>
+            <h3>Empty Elements</h3>
+            <pre><code class="hljs javascript" data-trim>
+var arr = [1,2,3];
+delete arr[1];
+arr.forEach((element, index, array) => console.log(index));
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+0
+2
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+[0, undefined, 2].forEach(
+                (element, index, array) => console.log(index));
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+0
+1
+2
+			</code></pre>
+        </section>
+        <section>
+            <h1>Array</h1>
+            <h3>Generation</h3>
+            <pre><code class="hljs javascript" data-trim>
+Array(16)
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+[empty × 16]
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+Array(16, 17, 18)
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+[16, 17, 18]
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+Array(16).map((element, index, array) => index)
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+[empty × 16]
+			</code></pre>
+        </section>
+        <section>
+            <h1>Date</h1>
+            <h3>what is Date</h3>
+            <pre><code class="hljs javascript" data-trim>
+Date()
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+"Tue Aug 20 2019 14:38:39 GMT+0300 (Moscow Standard Time)"
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+new Date()
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+Tue Aug 20 2019 14:38:39 GMT+0300 (Moscow Standard Time)
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+new Date().valueOf()
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+1566301318268
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+Date(1566301318268)
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+"Tue Aug 20 2019 14:42:46 GMT+0300 (Moscow Standard Time)"
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+new Date(1566301318268)
+			</code></pre>
+        </section>
+        <section>
+            <h1>Type coercion</h1>
+            <h3>🙈</h3>
+            <pre><code class="hljs javascript" data-trim>
+[] + []
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+""
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+[] + {}
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+"[object Object]"
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+{} + []
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+0
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+{} + {}
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+NaN // SpiderMonkey
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+"[object Object][object Object]" // V8
+			</code></pre>
+        </section>
+        <section>
+            <h1>Type coercion</h1>
+            <h3>🙈</h3>
+            <p>Try at home</p>
+            <pre><code class="hljs javascript" data-trim>
+[] == []
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+false
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+[] != []
+			</code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+true
+			</code></pre>
+        </section>
+    </div>
+</div>
+
+<script src="reveal/js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+
+        transition: 'slide',
+
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/notes/notes.js', async: true},
+            {src: 'plugin/highlight/highlight.js', async: true}
+        ]
+    });
+</script>
+</body>
+</html>

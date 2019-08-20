@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <title>reveal.js</title>
+    <title>JavaScript - Day Two</title>
 
     <link rel="stylesheet" href="reveal/css/reset.css">
     <link rel="stylesheet" href="reveal/css/reveal.css">
@@ -15,7 +15,7 @@
 
     <!-- Printing and PDF exports -->
     <script>
-        var link = document.createElement('link');
+        const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.type = 'text/css';
         link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
@@ -26,8 +26,8 @@
 <div class="reveal">
     <div class="slides">
         <section>
-            <h1>JavaScript</h1>
-            <h3>Parameter - by reference</h3>
+            <h1>Parameters</h1>
+            <h3>By value/reference</h3>
             <pre><code class="hljs javascript" data-trim data-line-numbers>
 function reset(o) {
     o = null;
@@ -36,9 +36,9 @@ function reset(o) {
 var x = [];
 reset(x);
 
-console.log(x);
+x;
 			</code></pre>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
 null
 []
 undefined
@@ -46,8 +46,8 @@ throw
 				</code></pre>
         </section>
         <section>
-            <h1>JavaScript</h1>
-            <h3>Parameters - by reference</h3>
+            <h1>Parameters</h1>
+            <h3>By value/reference</h3>
             <pre><code class="hljs javascript" data-trim data-line-numbers>
 function swap(a, b) {
     var temp = a;
@@ -57,9 +57,9 @@ function swap(a, b) {
 var x = 1, y = 2;
 swap(x, y);
 
-console.log(x);
+x;
 			</code></pre>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
 1
 2
 undefined
@@ -67,8 +67,8 @@ throw
 				</code></pre>
         </section>
         <section>
-            <h1>JavaScript</h1>
-            <h3>Code style</h3>
+            <h1>Code style</h1>
+            <h3>Braces</h3>
             <pre><code class="hljs javascript" data-trim data-line-numbers>
 function foo()
 {
@@ -82,8 +82,8 @@ function foo() {
 				</code></pre>
         </section>
         <section>
-            <h1>JavaScript</h1>
-            <h3>Code style</h3>
+            <h1>Code style</h1>
+            <h3>Braces</h3>
             <pre><code class="hljs javascript" data-trim data-line-numbers>
 function foo()
 {
@@ -102,50 +102,8 @@ function foo() {
 				</code></pre>
         </section>
         <section>
-            <h1>JavaScript</h1>
-            <h3>Code style</h3>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-function foo()
-{
-  return
-  {
-    ok: false
-  }
-}
-			</code></pre>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-function foo() {
-  return {
-    ok: true
-  }
-}
-				</code></pre>
-        </section>
-        <section>
-            <h1>JavaScript</h1>
-            <h3>Just Don't</h3>
-            <pre><code class="hljs javascript" data-trim>
-var a = b = 0;
-			</code></pre>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-var a = 0, b = 0;
-var a = (b = 0);
-				</code></pre>
-        </section>
-        <section>
-            <h1>JavaScript</h1>
-            <h3>Just Don't</h3>
-            <pre><code class="hljs javascript" data-trim>
-if (a) b(); c();
-			</code></pre>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-if (a) {b(); c();}
-if (a) {b();} c();
-				</code></pre>
-        </section>
-        <section>
-            <h1>JavaScript</h1>
-            <h3>Just Don't</h3>
+            <h1>Just</h1>
+            <h3>Don't</h3>
             <pre><code class="hljs javascript" data-trim data-line-numbers>
 (function() {
   var x = "x",
