@@ -30,24 +30,24 @@
             <h3>Don't</h3>
             <pre><code class="hljs javascript" data-trim>
 var a = b = 0;
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 var a = 0, b = 0;
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 var a = (b = 0);
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Just</h1>
             <h3>Don't</h3>
             <pre><code class="hljs javascript" data-trim>
 if (a) b(); c();
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
 if (a) {b();  c();}
 if (a) {b();} c();
-				</code></pre>
+                </code></pre>
         </section>
         <section>
             <h1>Object</h1>
@@ -56,43 +56,43 @@ if (a) {b();} c();
 var obj = {};
 obj[[]] = "value";
 Object.keys(obj);
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
 0
 []
 [[]]
 [""]
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Number</h1>
             <h3>Precision</h3>
             <pre><code class="hljs javascript" data-trim>
 0.1 + 0.2 === 0.3 // false
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 0.1 + 0.2 === 0.30000000000000004 // true
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Number</h1>
             <h3>Precision</h3>
             <pre><code class="hljs javascript" data-trim>
 1 === 1.000000000000001 // false
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 1 === 1.0000000000000001 // true
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Number</h1>
             <h3>Safe bounds</h3>
             <pre><code class="hljs javascript" data-trim>
 Number.MAX_SAFE_INTEGER // 9007199254740991
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 Number.MAX_SAFE_INTEGER + 1 === Number.MAX_SAFE_INTEGER + 2 // true
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 Number.MAX_SAFE_INTEGER + 0 // 9007199254740991
 Number.MAX_SAFE_INTEGER + 1 // 9007199254740992
@@ -102,7 +102,7 @@ Number.MAX_SAFE_INTEGER + 4 // 9007199254740996
 Number.MAX_SAFE_INTEGER + 5 // 9007199254740996
 Number.MAX_SAFE_INTEGER + 6 // 9007199254740996
 Number.MAX_SAFE_INTEGER + 7 // 9007199254740998
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Number</h1>
@@ -112,13 +112,13 @@ Number.MAX_SAFE_INTEGER + 7 // 9007199254740998
 015, 0001, -0o77, 0o777777777777n             (octal, base 8)
 0x1123, 0x00111, -0xF1A7, 0x123456789ABCDEFn  (hexadecimal, "hex" or base 16)
 0b11, 0b0011, -0b11, 0b11101001010101010101n  (binary, base 2)
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers="">
 3.1415926
 -.123456789
 -3.1E+12
 .1e-23
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Array</h1>
@@ -127,11 +127,11 @@ Number.MAX_SAFE_INTEGER + 7 // 9007199254740998
 []
 [1,2,3]
 [1,,3]
-			</code></pre>
+            </code></pre>
             <p class="fragment">Try at home</p>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 [1,,3,]
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Array</h1>
@@ -140,20 +140,20 @@ Number.MAX_SAFE_INTEGER + 7 // 9007199254740998
 var arr = [1,2,3];
 delete arr[1];
 arr;
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 [1, undefined, 3] // SpiderMonkey
 [1, empty, 3] // V8
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 arr.splice(1, 1);
 
 // [undefined] // SpiderMonkey
 // [empty] // V8
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 [1, 3]
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Array</h1>
@@ -162,11 +162,11 @@ arr.splice(1, 1);
 var arr = [1,2,3];
 arr[5] = "Hello there!";
 arr;
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 [1, 2, 3, undefined, undefined, "Hello there!"] // SpiderMonkey
 [1, 2, 3, empty × 2, "Hello there!"] // V8
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Array</h1>
@@ -175,104 +175,104 @@ arr;
 var arr = [1,2,3];
 delete arr[1];
 arr.forEach((element, index, array) => console.log(index));
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 0
 2
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 [0, undefined, 2].forEach(
                 (element, index, array) => console.log(index));
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 0
 1
 2
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Array</h1>
             <h3>Generation</h3>
             <pre><code class="hljs javascript" data-trim>
 Array(16)
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 [empty × 16]
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 Array(16, 17, 18)
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 [16, 17, 18]
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 Array(16).map((element, index, array) => index)
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 [empty × 16]
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Date</h1>
             <h3>what is Date</h3>
             <pre><code class="hljs javascript" data-trim>
 Date()
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 "Tue Aug 20 2019 14:38:39 GMT+0300 (Moscow Standard Time)"
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 new Date()
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 Tue Aug 20 2019 14:38:39 GMT+0300 (Moscow Standard Time)
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 new Date().valueOf()
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 1566301318268
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 Date(1566301318268)
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 "Tue Aug 20 2019 14:42:46 GMT+0300 (Moscow Standard Time)"
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 new Date(1566301318268)
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Type coercion</h1>
             <h3>🙈</h3>
             <pre><code class="hljs javascript" data-trim>
 [] + []
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 ""
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 [] + {}
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 "[object Object]"
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 {} + []
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 0
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 {} + {}
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 NaN // SpiderMonkey
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 "[object Object][object Object]" // V8
-			</code></pre>
+            </code></pre>
         </section>
         <section>
             <h1>Type coercion</h1>
@@ -280,16 +280,16 @@ NaN // SpiderMonkey
             <p>Try at home</p>
             <pre><code class="hljs javascript" data-trim>
 [] == []
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 false
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 [] != []
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim>
 true
-			</code></pre>
+            </code></pre>
         </section>
     </div>
 </div>

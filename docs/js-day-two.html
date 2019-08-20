@@ -26,6 +26,223 @@
 <div class="reveal">
     <div class="slides">
         <section>
+            <h1>Function</h1>
+            <h3>Method</h3>
+            <h3>Class</h3>
+            <h3>Constructor</h3>
+            <h3>Module</h3>
+        </section>
+        <section>
+            <h3><code>function</code> expression</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+var bar = function foo(param1, param2) {
+  // some body
+}
+            </code></pre>
+            <ul>
+                <li><code>function</code></li>
+                <li>optional name</li>
+                <li>
+                    <p>parameters</p>
+                    <ul>
+                        <li>Wrapped in parens</li>
+                        <li>Zero or more names</li>
+                        <li>Separated by <code>,</code> (comma)</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <p>body</p>
+                    <ul>
+                        <li>Wrapped in curly braces</li>
+                        <li>Zero or more statements</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3><code>function</code> expression</h3>
+            <ul>
+                <li>Produces an instance of a function object.</li>
+                <li>
+                    <p>Function objects are first class.</p>
+                    <ul>
+                        <li>May be passed as an argument to a function</li>
+                        <li>May be returned from a function</li>
+                        <li>May assigned to a variable</li>
+                        <li>May be stored in an object or array</li>
+                    </ul>
+                </li>
+                <li>Function objects inherit from
+                    <code>Function.prototype</code>.
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3><code>var</code> statement</h3>
+            <ul>
+                <li>Declares and initializes variables within a function.</li>
+                <li>Types are not specified.</li>
+                <li>A variable declared anywhere within a function is visible everywhere within the function.</li>
+            </ul>
+        </section>
+        <section>
+            <h3><code>var</code> statement</h3>
+            <p>It gets split into two parts:</p>
+            <ul>
+                <li>The declaration part gets hoisted to the top of the function, initializing with
+                    <code>undefined</code></li>
+                <li>The initialization part turns into an ordinary assignment</li>
+            </ul>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+var x = 1;
+var y;
+            </code></pre>
+            <p>expands into</p>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+var x = undefined;
+var y = undefined;
+// ...
+x = 1;
+            </code></pre>
+        </section>
+        <section>
+            <h3><code>function</code> statement</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo(param1, param2) {
+  // some body
+}
+            </code></pre>
+            <ul>
+                <li><code>function</code></li>
+                <li>mandatory name</li>
+                <li>
+                    <p>parameters</p>
+                    <ul>
+                        <li>Wrapped in parens</li>
+                        <li>Zero or more names</li>
+                        <li>Separated by <code>,</code> (comma)</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>body</p>
+                    <ul>
+                        <li>Wrapped in curly braces</li>
+                        <li>Zero or more statements</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h3><code>function</code> statement</h3>
+            <p>The function statement is a short-hand for a var
+                statement with a function value.</p>
+            <pre><code class="hljs javascript" data-trim>
+function foo() {}
+            </code></pre>
+            <p>expands to</p>
+            <pre><code class="hljs javascript" data-trim>
+var foo = function foo() {};
+            </code></pre>
+            <p>which further expands to</p>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+var foo = undefined;
+foo = function foo() {};
+            </code></pre>
+            <p>The assignment of the function is also hoisted!</p>
+        </section>
+        <section>
+            <section>
+            <h1>Scope</h1>
+            <ul>
+                <li>
+                    <h3><code>function</code> scope</h3>
+                    <p><code>var</code> declarations are hoisted within the function.</p>
+                </li>
+                <li>
+                    <h3><code>{ block }</code> scope</h3>
+                    <p><code>const</code> and <code>let</code> declarations are hoisted within the block.</p>
+                </li>
+            </ul>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function() {
+  var myVar = "var";
+  {
+    const myConst = "const";
+    let myLet = "let";
+  }
+}
+                     </code></pre>
+            </section>
+            <section>
+                <h1>Just</h1>
+                <h3>Don't</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="2,4">
+function assure_positive(matrix, n) {
+    for (var i = 0; i < n; i += 1) {
+        var row = matrix[i];
+        for (var i = 0; i < row.length; i += 1) {
+           if (row[i] < 0) {
+               throw new Error('Negative');
+           }
+        }
+    }
+}
+            </code></pre>
+            </section>
+        </section>
+        <section>
+            <h1><code>return</code> statement</h1>
+            <pre><code class="hljs javascript" data-trim>
+return expression;
+            </code></pre>
+            <p>or</p>
+            <pre><code class="hljs javascript" data-trim>
+return;
+            </code></pre>
+            <p>If there is no <code>expression</code>, then the return value is <code>undefined</code>.</p>
+            <p>Except for constructors, whose default return value is <code>this</code>.</p>
+        </section>
+        <section>
+            <h1>Invocation</h1>
+            <pre><code class="hljs javascript" data-trim>
+function foo(param1, param2) {}
+
+foo("arg1", "arg2");
+            </code></pre>
+            <ul>
+                <li>
+                    The <code>()</code> suffix operator surrounding zero or more comma separated arguments.
+                </li>
+                <li>
+                    The arguments will be bound to parameters.
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h1>Invocation</h1>
+            <ul>
+                <li>
+                    Invocation If a function is called with too many arguments, the extra arguments are ignored.
+                </li>
+                <li>
+                    If a function is called with too few arguments, the missing values will be <code>undefined</code>.
+                </li>
+                <li>
+                    There is no implicit type checking on the arguments.
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h1>Invocation</h1>
+            <h3>Pseudo parameters</h3>
+            <ul>
+                <li><code>agruments</code></li>
+                <li><code>this</code></li>
+            </ul>
+        </section>
+
+        <section>
             <h1>Parameters</h1>
             <h3>By value/reference</h3>
             <pre><code class="hljs javascript" data-trim data-line-numbers>
@@ -37,13 +254,13 @@ var x = [];
 reset(x);
 
 x;
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
 null
 []
 undefined
 throw
-				</code></pre>
+                </code></pre>
         </section>
         <section>
             <h1>Parameters</h1>
@@ -58,13 +275,13 @@ var x = 1, y = 2;
 swap(x, y);
 
 x;
-			</code></pre>
+            </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
 1
 2
 undefined
 throw
-				</code></pre>
+                </code></pre>
         </section>
         <section>
             <h1>Code style</h1>
@@ -74,12 +291,12 @@ function foo()
 {
   // ...
 }
-			</code></pre>
+            </code></pre>
             <pre><code class="hljs javascript" data-trim data-line-numbers>
 function foo() {
   // ...
 }
-				</code></pre>
+                </code></pre>
         </section>
         <section>
             <h1>Code style</h1>
@@ -92,14 +309,14 @@ function foo()
     ok: false
   }
 }
-			</code></pre>
+            </code></pre>
             <pre><code class="hljs javascript" data-trim data-line-numbers>
 function foo() {
   return {
     ok: true
   }
 }
-				</code></pre>
+                </code></pre>
         </section>
         <section>
             <h1>Just</h1>
@@ -109,17 +326,17 @@ function foo() {
   var x = "x",
   y = "y";
 })();
-			</code></pre>
+            </code></pre>
             <pre><code class="hljs javascript" data-trim data-line-numbers>
 (function() {
   var x = 'x';
   y = "y";
 })();
-				</code></pre>
-			<aside class="notes">
-				1. ' vs "
-				2. local variable, this vs globalThis
-			</aside>
+                </code></pre>
+            <aside class="notes">
+                1. ' vs "
+                2. local variable, this vs globalThis
+            </aside>
         </section>
     </div>
 </div>
