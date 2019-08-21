@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="reveal/css/reset.css">
     <link rel="stylesheet" href="reveal/css/reveal.css">
     <link rel="stylesheet" href="reveal/css/theme/black.css">
+    <link rel="stylesheet" href="custom/layouts.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="reveal/lib/css/monokai.css">
@@ -153,19 +154,34 @@ foo = function foo() {};
         </section>
         <section>
             <section>
-            <h1>Scope</h1>
-            <ul>
-                <li>
-                    <h3><code>function</code> scope</h3>
-                    <p><code>var</code> declarations are hoisted within the function.</p>
-                </li>
-                <li>
-                    <h3><code>{ block }</code> scope</h3>
-                    <p><code>const</code> and <code>let</code> declarations are hoisted within the block.</p>
-                </li>
-            </ul>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-function() {
+                <h1>Scope</h1>
+                <ul>
+                    <li>
+                        <h3><code>function</code> scope</h3>
+                        <p><code>var</code> declarations are hoisted within the function.</p>
+                    </li>
+                </ul>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo() {
+  var myVar = "var";
+}
+                     </code></pre>
+            </section>
+            <section>
+                <h1>Scope</h1>
+                <h3>ES2015</h3>
+                <ul>
+                    <li>
+                        <h3><code>function</code> scope</h3>
+                        <p><code>var</code> declarations are hoisted within the function.</p>
+                    </li>
+                    <li>
+                        <h3><code>{ block }</code> scope</h3>
+                        <p><code>const</code> and <code>let</code> declarations are hoisted within the block.</p>
+                    </li>
+                </ul>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo() {
   var myVar = "var";
   {
     const myConst = "const";
@@ -220,18 +236,37 @@ foo("arg1", "arg2");
             </ul>
         </section>
         <section>
-            <h1>Invocation</h1>
-            <ul>
-                <li>
-                    Invocation If a function is called with too many arguments, the extra arguments are ignored.
-                </li>
-                <li>
-                    If a function is called with too few arguments, the missing values will be <code>undefined</code>.
-                </li>
-                <li>
-                    There is no implicit type checking on the arguments.
-                </li>
-            </ul>
+            <section>
+                <h1>Invocation</h1>
+                <ul>
+                    <li>
+                        Invocation If a function is called with too many arguments, the extra arguments are ignored.
+                    </li>
+                    <li>
+                        If a function is called with too few arguments, the missing values will be
+                        <code>undefined</code>.
+                    </li>
+                    <li>
+                        There is no implicit type checking on the arguments.
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h1>Invocation</h1>
+                <h3>ES2015</h3>
+                <pre><code class="hljs javascript" data-trim>
+function foo(a, b = 0) { }
+                </code></pre>
+                <pre class="fragment"><code class="hljs javascript" data-trim>
+function foo(a, b = bar()) { }
+                </code></pre>
+                <pre class="fragment"><code class="hljs javascript" data-trim>
+function foo(a, b = bar(), c = a + b) { }
+                </code></pre>
+                <pre class="fragment"><code class="hljs javascript" data-trim>
+function foo(a, b = bar(), c = a + b, d) { }
+                </code></pre>
+            </section>
         </section>
         <section>
             <h1>Invocation</h1>
@@ -241,7 +276,285 @@ foo("arg1", "arg2");
                 <li><code>this</code></li>
             </ul>
         </section>
-
+        <section>
+            <section>
+                <h1>Invocation</h1>
+                <h3><code>arguments</code></h3>
+                <ul>
+                    <li>When a function is invoked, in addition to its parameters, it also gets a special parameter
+                        called <code>arguments</code>.
+                    </li>
+                    <li>It contains all of the arguments from the invocation.</li>
+                    <li>It is an array-like object.</li>
+                    <li><code>arguments.length</code> is the number of arguments passed.</li>
+                </ul>
+            </section>
+            <section>
+                <h1>Invocation</h1>
+                <h3><code>arguments</code></h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function sum() {
+    var i;
+    var n = arguments.length;
+    var total = 0;
+    for (i = 0; i < n; i += 1) {
+        total += arguments[i];
+    }
+    return total;
+}
+var ten = sum(1, 2, 3, 4);
+                </code></pre>
+            </section>
+            <section>
+                <h1>Invocation</h1>
+                <h3><code>ES2015</code></h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function sum(...args) {
+    const n = args.length;
+    let total = 0;
+    for (let i = 0; i < n; i += 1) {
+        total += args[i];
+    }
+    return total;
+}
+const ten = sum(1, 2, 3, 4);
+                </code></pre>
+            </section>
+            <section>
+                <h1>Invocation</h1>
+                <h3><code>ES2015</code></h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function sum(...args) {
+    return args.reduce(function(sum, value) {
+        return sum + value;
+    });
+}
+const ten = sum(1, 2, 3, 4);
+                </code></pre>
+            </section>
+        </section>
+        <section>
+            <h1>Invocation</h1>
+            <h3><code>this</code></h3>
+            <ul>
+                <li>The <code>this</code> parameter contains a reference to the object of invocation.</li>
+                <li><code>this</code> allows a method to know what object it is concerned with.</li>
+                <li><code>this</code> allows a single function object to service many objects.</li>
+                <li><code>this</code> is key to prototypal inheritance.</li>
+            </ul>
+        </section>
+        <section>
+            <h1>Invocation</h1>
+            <p>Function form</p>
+            <pre><code class="hljs javascript" data-trim>
+functionObject(arguments);
+            </code></pre>
+            <p>Method form</p>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+thisObject.methodName(arguments);
+thisObject["methodName"](arguments);
+                    </code></pre>
+            <p>Constructor form</p>
+            <pre><code class="hljs javascript" data-trim>
+new FunctionObject(arguments);
+            </code></pre>
+            <p>Apply form</p>
+            <pre><code class="hljs javascript" data-trim>
+functionObject.apply(thisObject,[arguments])
+                    </code></pre>
+        </section>
+        <section>
+            <h1>Invocation</h1>
+            <h3>Method form</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+thisObject.methodName(arguments);
+thisObject["methodName"](arguments);
+            </code></pre>
+            <p>When a function is called in the method form, <code>this</code> is set to <code>thisObject</code>, the
+                object containing the function.</p>
+            <p>This allows methods to have a reference to the object of interest.</p>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function logLength() {
+    console.log(this.length);
+}
+            </code></pre>
+        </section>
+        <section>
+            <h1>Invocation</h1>
+            <h3>Function form</h3>
+            <pre><code class="hljs javascript" data-trim>
+functionObject(arguments);
+            </code></pre>
+            <p>When a function is called in the function form, <code>this</code> is set to the global object.</p>
+            <p>That is not very useful.</p>
+            <p>(Fixed in ES5/Strict) An inner function does not get access to the outer <code>this</code>.</p>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function logLength(length) {
+    console.log(length);
+}
+            </code></pre>
+        </section>
+        <section>
+            <h1>Invocation</h1>
+            <h3>Constructor form</h3>
+            <pre><code class="hljs javascript" data-trim>
+new FunctionObject(arguments);
+            </code></pre>
+            <p>When a function is called with the new operator, a new object is created and assigned to
+                <code>this</code>.</p>
+            <p>If there is not an explicit return value, then <code>this</code> will be returned.</p>
+            <p>Used in the Pseudoclassical style.</p>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function Human(name) {
+    this.name = name;
+}
+const baby = new Human("Batman");
+            </code></pre>
+        </section>
+        <section>
+            <h1>Invocation</h1>
+            <h3>Apply form</h3>
+            <pre><code class="hljs javascript" data-trim>
+functionObject.apply(thisObject, [arguments]);
+functionObject.call(thisObject, argument1, argument2…);
+            </code></pre>
+            <p>A function’s apply or call method allows for calling the function, explicitly specifying
+                <code>thisObject</code></p>
+            <p>If there is not an explicit return value, then <code>this</code> will be returned.</p>
+            <p>It can also take an array of parameters or a sequence of parameters.</p>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+Function.prototype.call = function(thisObject) {
+    return this.apply(
+        thisObject,
+        Array.prototype.slice.apply(arguments, [1])
+    );
+};
+            </code></pre>
+        </section>
+        <section>
+            <section>
+                <h1>Invocation</h1>
+                <h3><code>this</code></h3>
+                <ul>
+                    <li><code>this</code> this is an bonus parameter</li>
+                    <li>Its value depends on the calling form.</li>
+                    <li><code>this</code> gives methods access to their objects.</li>
+                    <li><code>this</code> is bound at invocation time.</li>
+                </ul>
+            </section>
+            <section>
+                <h1>Invocation</h1>
+                <h3><code>this</code></h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Invocation form</th>
+                        <th><code>this</code></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>function</td>
+                        <td>the global object / <code>undefined</code></td>
+                    </tr>
+                    <tr>
+                        <td>method</td>
+                        <td>the object</td>
+                    </tr>
+                    <tr>
+                        <td>constructor</td>
+                        <td>the new object</td>
+                    </tr>
+                    <tr>
+                        <td>apply</td>
+                        <td>argument</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+        <section>
+            <h3>Immediately invoked function</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo() {
+    // body
+}
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+(function() {
+    // body
+})();
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+function say(something) {
+    console.log(something);
+}
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+(function(something) {
+    console.log(something);
+})("Hello");
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+(function(...args) {
+    // body
+})(...params);
+            </code></pre>
+        </section>
+        <section>
+            <section>
+                <h3>Tennent’s Principle of Correspondence</h3>
+                <p>Any expression or statement can be wrapped in an immediately invoked function without changing
+                    meaning…</p>
+                <pre><code class="hljs javascript" data-trim>
+expression
+                </code></pre>
+                <p>Except <code>this arguments var function break continue return</code></p>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+(function() {
+    return expression;
+})();
+                </code></pre>
+            </section>
+            <section>
+                <h3>Tennent’s Principle of Correspondence</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function factorial(n) {
+    let result = 1; // result: variable
+    while (n > 1) {
+        result *= n;
+        n -= 1;
+    }
+    return result;
+}
+                </code></pre>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function factorial(n) {
+    return (function(result) { // result: parameter
+        while (n > 1) {
+            result *= n;
+            n -= 1;
+        }
+        return result;
+    })(1);
+}
+                </code></pre>
+            </section>
+        </section>
+        <section>
+            <h1>Closure</h1>
+            <ul>
+                <li>Functions can nest.</li>
+                <li>Functions are values.</li>
+            </ul>
+            <ul>
+                <li>The context of an inner function includes the
+                    scope of the outer function.</li>
+                <li>An inner function enjoys that context even after
+                    the outer functions have returned.</li>
+            </ul>
+        </section>
+        <section><h1>[WIP]</h1></section>
         <section>
             <h1>Parameters</h1>
             <h3>By value/reference</h3>
