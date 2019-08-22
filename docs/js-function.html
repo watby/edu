@@ -27,6 +27,10 @@
 <div class="reveal">
     <div class="slides">
         <section>
+            <h1>JavaScript</h1>
+            <h3>Function</h3>
+        </section>
+        <section>
             <h1>Function</h1>
             <h3>Method</h3>
             <h3>Class</h3>
@@ -220,20 +224,63 @@ return;
             <p>Except for constructors, whose default return value is <code>this</code>.</p>
         </section>
         <section>
-            <h1>Invocation</h1>
-            <pre><code class="hljs javascript" data-trim>
+            <section>
+                <h1>Invocation</h1>
+                <pre><code class="hljs javascript" data-trim>
 function foo(param1, param2) {}
 
 foo("arg1", "arg2");
             </code></pre>
-            <ul>
-                <li>
-                    The <code>()</code> suffix operator surrounding zero or more comma separated arguments.
-                </li>
-                <li>
-                    The arguments will be bound to parameters.
-                </li>
-            </ul>
+                <ul>
+                    <li>
+                        The <code>()</code> suffix operator surrounding zero or more comma separated arguments.
+                    </li>
+                    <li>
+                        The arguments will be bound to parameters.
+                    </li>
+                </ul>
+            </section>
+            <section>
+                <h1>Parameters</h1>
+                <h3>By value/reference</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function reset(o) {
+    o = null;
+}
+
+var x = [];
+reset(x);
+
+x;
+            </code></pre>
+                <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+null
+[]
+undefined
+throw
+                </code></pre>
+            </section>
+            <section>
+                <h1>Parameters</h1>
+                <h3>By value/reference</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function swap(a, b) {
+    var temp = a;
+    a = b;
+    b = temp
+}
+var x = 1, y = 2;
+swap(x, y);
+
+x;
+            </code></pre>
+                <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+1
+2
+undefined
+throw
+                </code></pre>
+            </section>
         </section>
         <section>
             <section>
@@ -266,6 +313,63 @@ function foo(a, b = bar(), c = a + b) { }
                 <pre class="fragment"><code class="hljs javascript" data-trim>
 function foo(a, b = bar(), c = a + b, d) { }
                 </code></pre>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h1>Code style</h1>
+                <h3>Braces</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo()
+{
+  // ...
+}
+            </code></pre>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo() {
+  // ...
+}
+                </code></pre>
+            </section>
+            <section>
+                <h1>Code style</h1>
+                <h3>Braces</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo()
+{
+  return
+  {
+    ok: false
+  }
+}
+            </code></pre>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function foo() {
+  return {
+    ok: true
+  }
+}
+                </code></pre>
+            </section>
+            <section>
+                <h1>Just</h1>
+                <h3>Don't</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function() {
+  var x = "x",
+  y = "y";
+}
+            </code></pre>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+function() {
+  var x = 'x';
+  y = "y";
+}
+                </code></pre>
+                <aside class="notes">
+                    1. ' vs "
+                    2. local variable, this vs globalThis
+                </aside>
             </section>
         </section>
         <section>
@@ -474,6 +578,37 @@ Function.prototype.call = function(thisObject) {
             </section>
         </section>
         <section>
+            <section>
+                <h3>Recursion</h3>
+                <p>When a function calls itself.</p>
+            </section>
+            <section>
+                <h3>Fibonacci sequence</h3>
+                <p>1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...</p>
+                <p>F(n) = F(n-1) + F(n-2)</p>
+                <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+function fibonacci(num){
+    let current = 1, result = 0, next;
+
+    while (num >= 0){
+        next = current;
+        current = current + result;
+        result = next;
+        num--;
+    }
+
+    return result;
+}
+            </code></pre>
+                <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+function fibonacci(num) {
+  if (num <= 1) return 1;
+  return fibonacci(num - 1) + fibonacci(num - 2);
+}
+            </code></pre>
+            </section>
+        </section>
+        <section>
             <h3>Immediately invoked function</h3>
             <pre><code class="hljs javascript" data-trim data-line-numbers>
 function foo() {
@@ -481,7 +616,7 @@ function foo() {
 }
             </code></pre>
             <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
-(function() {
+(function foo() {
     // body
 })();
             </code></pre>
@@ -540,116 +675,6 @@ function factorial(n) {
 }
                 </code></pre>
             </section>
-        </section>
-        <section>
-            <h1>Closure</h1>
-            <ul>
-                <li>Functions can nest.</li>
-                <li>Functions are values.</li>
-            </ul>
-            <ul>
-                <li>The context of an inner function includes the
-                    scope of the outer function.</li>
-                <li>An inner function enjoys that context even after
-                    the outer functions have returned.</li>
-            </ul>
-        </section>
-        <section><h1>[WIP]</h1></section>
-        <section>
-            <h1>Parameters</h1>
-            <h3>By value/reference</h3>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-function reset(o) {
-    o = null;
-}
-
-var x = [];
-reset(x);
-
-x;
-            </code></pre>
-            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
-null
-[]
-undefined
-throw
-                </code></pre>
-        </section>
-        <section>
-            <h1>Parameters</h1>
-            <h3>By value/reference</h3>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-function swap(a, b) {
-    var temp = a;
-    a = b;
-    b = temp
-}
-var x = 1, y = 2;
-swap(x, y);
-
-x;
-            </code></pre>
-            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
-1
-2
-undefined
-throw
-                </code></pre>
-        </section>
-        <section>
-            <h1>Code style</h1>
-            <h3>Braces</h3>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-function foo()
-{
-  // ...
-}
-            </code></pre>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-function foo() {
-  // ...
-}
-                </code></pre>
-        </section>
-        <section>
-            <h1>Code style</h1>
-            <h3>Braces</h3>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-function foo()
-{
-  return
-  {
-    ok: false
-  }
-}
-            </code></pre>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-function foo() {
-  return {
-    ok: true
-  }
-}
-                </code></pre>
-        </section>
-        <section>
-            <h1>Just</h1>
-            <h3>Don't</h3>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-(function() {
-  var x = "x",
-  y = "y";
-})();
-            </code></pre>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
-(function() {
-  var x = 'x';
-  y = "y";
-})();
-                </code></pre>
-            <aside class="notes">
-                1. ' vs "
-                2. local variable, this vs globalThis
-            </aside>
         </section>
     </div>
 </div>
