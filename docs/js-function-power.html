@@ -31,19 +31,266 @@
             <h3>Function's power</h3>
         </section>
         <section>
-            <h1>Closure</h1>
-            <ul>
-                <li>Functions can nest.</li>
-                <li>Functions are values.</li>
-            </ul>
-            <ul>
-                <li>The context of an inner function includes the
-                    scope of the outer function.
-                </li>
-                <li>An inner function enjoys that context even after
-                    the outer functions have returned.
-                </li>
-            </ul>
+            <section>
+                <h1>Closure</h1>
+                <ul>
+                    <li>Functions can nest.</li>
+                    <li>Functions are values.</li>
+                    <li>Function have a (lexical) scope.</li>
+                </ul>
+            </section>
+            <section>
+                <ul>
+                    <li>Lisp [1958]
+                        <ul>
+                            <li><u>dynamic scope</u></li>
+                            <li>nested functions</li>
+                            <li>function values</li>
+                        </ul>
+                    </li>
+                    <li>Algol 60 [1960]
+                        <ul>
+                            <li>lexical scope</li>
+                            <li>nested functions</li>
+                            <li><u>functions are not values</u></li>
+                        </ul>
+                    </li>
+                    <li>C [1972]
+                        <ul>
+                            <li>lexical scope</li>
+                            <li><u>functions cannot nest</u></li>
+                            <li>functions are values</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </section>
+        <section>
+            <h3>Scope</h3>
+            <table style="width: 100%">
+                <thead>
+                <tr>
+                    <th>Block scope</th>
+                    <th>Function scope</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <pre><code class="hljs javascript" data-trim data-line-numbers="">
+{
+    let a;
+    {
+        let b;
+        // a
+        // b
+    }
+    // a
+}
+                        </code></pre>
+                    </td>
+                    <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function outer() {
+    let a;
+    function inner() {
+        let b;
+        // a
+        // b
+    }
+    // a
+}
+                        </code></pre>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p class="fragment">The context of an inner function includes the
+                scope of the outer function.
+            </p>
+        </section>
+        <section>
+            <h3>The inner function can
+                survive the outer function</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function outer() {
+    let a;
+    return function inner() {
+        let b;
+        // a
+        // b
+    }
+    // a
+}
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers="">
+let inner = outer();
+inner();
+            </code></pre>
+            <p class="fragment">So the inner function enjoys outer context even after
+                the outer functions have returned.
+            </p>
+        </section>
+        <section>
+            <section>
+                <h1>Global</h1>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+const names = [
+    "zero", "one", "two", "three", "four",
+    "five", "six", "seven", "eight", "nine"
+];
+const digitName = function (n) {
+    return names[n];
+};
+alert(digitName(3)); // "three"
+            </code></pre>
+            </section>
+            <section>
+                <h1>Slow</h1>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+let digitName = function (n) {
+    const names = [
+        "zero", "one", "two", "three", "four",
+        "five", "six", "seven", "eight", "nine"
+    ];
+    return names[n];
+};
+alert(digitName(3)); // "three"
+            </code></pre>
+            </section>
+            <section>
+                <h1>Closure</h1>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+let digitName = (function (n) {
+    const names = [
+        "zero", "one", "two", "three", "four",
+        "five", "six", "seven", "eight", "nine"
+    ];
+    return function (n) {
+        return names[n];
+    };
+}());
+alert(digitName(3)); // "three"
+            </code></pre>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h1>Inheritance</h1>
+                <h3>Pseudoclassical</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Gizmo(id) {
+    this.id = id;
+}
+Gizmo.prototype.toString = function () {
+    return "Gizmo " + this.id;
+};
+                 </code></pre>
+            </section>
+            <section>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Gizmo(id) {
+    this.id = id;
+}
+                 </code></pre>
+                <img src="gizmo1.png" alt=""/>
+            </section>
+            <section>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Gizmo(id) {
+    this.id = id;
+}
+
+Gizmo.prototype.toString = function () {
+    return "Gizmo " + this.id;
+};
+                 </code></pre>
+                <img src="gizmo2.png" alt=""/>
+            </section>
+            <section>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Gizmo(id) {
+    this.id = id;
+}
+
+Gizmo.prototype.toString = function () {
+    return "Gizmo " + this.id;
+};
+                 </code></pre>
+                <img src="gizmo3.png" alt=""/>
+            </section>
+            <section>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Gizmo(id) {
+    this.id = id;
+}
+
+Gizmo.prototype.toString = function () {
+    return "Gizmo " + this.id;
+};
+                 </code></pre>
+                <img src="gizmo4.png" alt=""/>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h3>Pseudoclassical Inheritance</h3>
+                <p>If we replace the original prototype
+                    object, then we can inherit another
+                    object's stuff.</p>
+            </section>
+            <section>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Hoozit(id) {
+    this.id = id;
+}
+                 </code></pre>
+                <img src="hoozit1.png" alt=""/>
+            </section>
+            <section>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Hoozit(id) {
+    this.id = id;
+}
+Hoozit.prototype = new Gizmo();
+Hoozit.prototype.test = function (id) {
+    return this.id === id;
+};
+                 </code></pre>
+                <img src="hoozit2.png" alt=""/>
+            </section>
+            <section>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Hoozit(id) {
+    this.id = id;
+}
+Hoozit.prototype = new Gizmo();
+Hoozit.prototype.test = function (id) {
+    return this.id === id;
+};
+                 </code></pre>
+                <img src="hoozit3.png" alt=""/>
+            </section>
+            <section>
+                <h3>Pseudoclassical Inheritance</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Gizmo(id) {
+    this.id = id;
+}
+Gizmo.prototype.toString = function () {
+    return "Gizmo " + this.id;
+};
+                 </code></pre>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Hoozit(id) {
+    this.id = id;
+}
+Hoozit.prototype = new Gizmo();
+Hoozit.prototype.test = function (id) {
+    return this.id === id;
+};
+                 </code></pre>
+            </section>
         </section>
         <section><h1>[WIP]</h1></section>
     </div>
