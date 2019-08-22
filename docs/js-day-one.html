@@ -331,6 +331,190 @@ true
             </code></pre>
             </section>
         </section>
+        <section>
+            <section>
+                <h1>Number localization</h1>
+                <table style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+(999).toString()
+                        </code></pre>
+                        </td>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+"999"
+                        </code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+(999).toLocaleString()
+                        </code></pre>
+                        </td>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+"999"
+                        </code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+(999.1).toString()
+                        </code></pre>
+                        </td>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+"999.1"
+                        </code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+(999.1).toLocaleString()
+                        </code></pre>
+                        </td>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+"999.1"
+                        </code></pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+let toLocaleString =
+    (locale, value) =>
+        Intl.NumberFormat(locale).format(value)
+                </code></pre>
+                <table style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+toLocaleString('en-US', 1.234)
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+toLocaleString('fr-FR', 1.234)
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+toLocaleString('ge-GE', 1.234)
+                        </code></pre>
+                        </td>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+"1.234"
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+"1,234"
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+"1,234"
+                        </code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+toLocaleString('en-US', 1234)
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+toLocaleString('fr-FR', 1234)
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+toLocaleString('ge-GE', 1234)
+                        </code></pre>
+                        </td>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+"1,234"
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+"1 234"
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+"1.234"
+                        </code></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+Number("1.234")
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+Number("1,234")
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+parseInt("1,234", 10)
+                        </code></pre>
+                        </td>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+1.234
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+NaN
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+1
+                        </code></pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+            <section>
+                <pre><code class="hljs javascript" data-trim>
+"1,234.5"
+"1 234,5"
+"1.234,5"
+                </code></pre>
+                <table style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+(1.1).toLocaleString().substring(1, 2)
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+(1000).toLocaleString().substring(1, 2)
+                        </code></pre>
+                        </td>
+                        <td class="fragment">
+                        <pre><code class="hljs javascript" data-trim>
+"."
+                        </code></pre>
+                            <pre><code class="hljs javascript" data-trim>
+","
+                        </code></pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+function parseLocaleNumber(str) {
+  let decimalSeparator = (1.1).toLocaleString().substring(1, 2);
+  let thousandSeparator = (1000).toLocaleString().substring(1, 2);
+  if (thousandSeparator.match(/\d/)) {
+    thousandSeparator = '';
+  }
+
+  str = str
+    .replace(new RegExp(thousandSeparator, 'g'), '')
+    .replace(new RegExp(decimalSeparator),      '.')
+
+  return parseFloat(str);
+}
+                        </code></pre>
+            </section>
+        </section>
     </div>
 </div>
 
