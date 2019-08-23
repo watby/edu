@@ -6,9 +6,9 @@
   "subdomain": "revealjs",
   "main": "js/reveal.js",
   "scripts": {
-    "test": "../node_modules/.bin/grunt test",
-    "start": "../node_modules/.bin/grunt serve",
-    "build": "../node_modules/.bin/grunt"
+    "test": "grunt test",
+    "start": "grunt serve",
+    "build": "grunt"
   },
   "author": {
     "name": "Hakim El Hattab",
