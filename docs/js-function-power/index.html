@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../reveal/css/reset.css">
     <link rel="stylesheet" href="../reveal/css/reveal.css">
     <link rel="stylesheet" href="../reveal/css/theme/black.css">
+    <link rel="stylesheet" href="custom.css">
 
     <!-- Theme used for syntax highlighting of code -->
     <link rel="stylesheet" href="../reveal/lib/css/monokai.css">
@@ -230,7 +231,7 @@ var singleton = (function () {
         </section>
         <section>
             <p>What if I tell you something like this?</p>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
+            <pre><code class="hljs javascript font-smaller" data-trim data-line-numbers>
 class Car {
     constructor(model) {
         this.model = model;
@@ -239,8 +240,7 @@ class Car {
         console.log(this.model);
     }
 }
-            </code></pre>
-            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+
 class Honda extends Car {
     constructor(color) {
         super("Honda");
@@ -254,9 +254,8 @@ class Honda extends Car {
             <p class="fragment">This is a valid ES2015</p>
         </section>
         <section>
-            <section>
-                <h3>Prototypal Inheritance</h3>
-                <pre><code class="hljs javascript" data-trim data-line-numbers>
+            <h3>Prototypal Inheritance</h3>
+            <pre><code class="hljs javascript font-smaller" data-trim data-line-numbers>
 var CarPrototype = {
     constructor: function(model) {
         this.model = model;
@@ -270,10 +269,7 @@ var car = Object.create(CarPrototype);
 car.constructor("Honda");
 car.sayName();
             </code></pre>
-            </section>
-            <section>
-                <h3>Prototypal Inheritance</h3>
-                <pre><code class="hljs javascript" data-trim data-line-numbers>
+            <pre class="fragment"><code class="hljs javascript font-smaller" data-trim data-line-numbers>
 var HondaPrototype = Object.create(CarPrototype);
 HondaPrototype.constructor = function(color) {
     CarPrototype.constructor.call(this, "Honda");
@@ -287,12 +283,10 @@ var honda = Object.create(HondaPrototype);
 honda.constructor("Red");
 honda.sayName();
             </code></pre>
-            </section>
         </section>
         <section>
-            <section>
-                <h3>Classical Inheritance</h3>
-                <pre><code class="hljs javascript" data-trim data-line-numbers>
+            <h3>Classical Inheritance</h3>
+            <pre><code class="hljs javascript font-smaller" data-trim data-line-numbers>
 var Car = function(model) {
     this.model = model;
 }
@@ -303,27 +297,112 @@ Car.prototype.sayName = function() {
 var car = new Car("Honda");
 car.sayName();
             </code></pre>
-            </section>
-            <section>
-                <h3>Classical Inheritance</h3>
-                <pre><code class="hljs javascript" data-trim data-line-numbers>
+            <pre class="fragment"><code class="hljs javascript font-smaller" data-trim data-line-numbers>
 var Honda = function(color) {
     this.color = color;
 };
 Honda.prototype = Object.create(Car.prototype);
 Honda.prototype.constructor = Honda;
-// Honda.__proto__ = Car;
-Honda.prototype.sayName = function() {
+Honda.prototype.sayName = function sayName() {
     console.log(this.color + ' ' + this.model);
-}
+};
 
 var honda = new Honda("Red");
 honda.sayName();
             </code></pre>
-            </section>
         </section>
         <section>
-            <pre><code class="hljs javascript" data-trim data-line-numbers>
+            <section>
+                <h1>Classical Inheritance</h1>
+                <h3>Step by step</h3>
+            </section>
+            <section data-background="CarHondaProto1.png" data-background-size="50%" data-background-position="right">
+                <pre><code class="hljs javascript half-width font-smaller" data-trim data-line-numbers>
+var Car = function(model) {
+    this.model = model;
+};
+                </code></pre>
+            </section>
+            <section data-background="CarHondaProto2.png" data-background-size="50%" data-background-position="right">
+                <pre><code class="hljs javascript half-width font-smaller" data-trim data-line-numbers>
+var Car = function(model) {
+    this.model = model;
+};
+
+Car.prototype.sayName = function sayName() {
+    console.log(this.model);
+}
+                </code></pre>
+            </section>
+            <section data-background="CarHondaProto3.png" data-background-size="50%" data-background-position="right">
+                <pre><code class="hljs javascript half-width font-smaller" data-trim data-line-numbers>
+var Car = function(model) {
+    this.model = model;
+};
+
+Car.prototype.sayName = function sayName() {
+    console.log(this.model);
+}
+
+var car = new Car("Honda");
+                </code></pre>
+            </section>
+            <section data-background="CarHondaProto4.png" data-background-size="50%" data-background-position="right">
+                <pre><code class="hljs javascript half-width font-smaller" data-trim data-line-numbers>
+var Car = function(model) {
+    this.model = model;
+};
+
+Car.prototype.sayName = function sayName() {
+    console.log(this.model);
+}
+
+var Honda = function(color) {
+    this.color = color;
+};
+                </code></pre>
+            </section>
+            <section data-background="CarHondaProto5.png" data-background-size="50%" data-background-position="right">
+                <pre><code class="hljs javascript half-width font-smaller" data-trim data-line-numbers>
+var Car = function(model) {
+    this.model = model;
+};
+
+Car.prototype.sayName = function sayName() {
+    console.log(this.model);
+}
+
+var Honda = function(color) {
+    this.color = color;
+};
+
+Honda.prototype = Object.create(Car.prototype);
+Honda.prototype.constructor = Honda;
+                </code></pre>
+            </section>
+            <section data-background="CarHondaProto6.png" data-background-size="50%" data-background-position="right">
+                <pre><code class="hljs javascript half-width font-smaller" data-trim data-line-numbers>
+var Car = function(model) {
+    this.model = model;
+};
+
+Car.prototype.sayName = function sayName() {
+    console.log(this.model);
+}
+
+var Honda = function(color) {
+    this.color = color;
+};
+
+Honda.prototype = Object.create(Car.prototype);
+Honda.prototype.constructor = Honda;
+
+var honda = new Honda("Red");
+honda.sayName();
+                </code></pre>
+            </section>
+            <section data-background="CarHondaProto6.png" data-background-size="50%" data-background-position="right">
+                <pre><code class="hljs javascript half-width font-smaller" data-trim data-line-numbers>
 class Car {
     constructor(model) {
         this.model = model;
@@ -332,8 +411,7 @@ class Car {
         console.log(this.model);
     }
 }
-            </code></pre>
-            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+
 class Honda extends Car {
     constructor(color) {
         super("Honda");
@@ -343,7 +421,15 @@ class Honda extends Car {
         console.log(`${this.color} ${this.model}`);
     }
 }
-            </code></pre>
+
+let honda = new Honda("Red");
+honda.sayName();
+                </code></pre>
+            </section>
+            <section data-background="CarHondaProto7.png" data-background-size="80%" data-background-position="center">
+            </section>
+            <section data-background="CarHondaProto8.png" data-background-size="80%" data-background-position="center">
+            </section>
         </section>
         <section><h1>[WIP]</h1></section>
     </div>
