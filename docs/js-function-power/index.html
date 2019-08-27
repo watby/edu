@@ -175,121 +175,175 @@ alert(digitName(3)); // "three"
         </section>
         <section>
             <section>
-                <h1>Inheritance</h1>
-                <h3>Pseudoclassical</h3>
+                <h3>Function as module</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+var …
+function …
+function …
+                </code></pre>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+(function () {
+    var …
+    function …
+    function …
+}());
+                </code></pre>
+            </section>
+            <section>
+                <h3>A Module Pattern</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+var singleton = (function () {
+    var privateVariable;
+    function privateFunction(x) {
+    ...privateVariable...
+    }
+    return {
+        firstMethod: function (a, b) {
+        ...privateVariable...
+        },
+        secondMethod: function (c) {
+        ...privateFunction()...
+        }
+    };
+}());
+                </code></pre>
+            </section>
+            <section>
+                <h3>A Module Pattern</h3>
                 <pre><code class="hljs javascript" data-trim data-line-numbers="">
-function Gizmo(id) {
-    this.id = id;
+(function () {
+    var privateVariable;
+    function privateFunction(x) {
+    ...privateVariable...
+    }
+    GLOBAL.methodical = {
+        firstMethod: function (a, b) {
+        ...privateVariable...
+        },
+        secondMethod: function (c) {
+        ...privateFunction()...
+        }
+    };
+}());
+                </code></pre>
+            </section>
+        </section>
+        <section>
+            <p>What if I tell you something like this?</p>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+class Car {
+    constructor(model) {
+        this.model = model;
+    }
+    sayName() {
+        console.log(this.model);
+    }
 }
-Gizmo.prototype.toString = function () {
-    return "Gizmo " + this.id;
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+class Honda extends Car {
+    constructor(color) {
+        super("Honda");
+        this.color = color;
+    }
+    sayName() {
+        console.log(`${this.color} ${this.model}`);
+    }
+}
+            </code></pre>
+            <p class="fragment">This is a valid ES2015</p>
+        </section>
+        <section>
+            <section>
+                <h3>Prototypal Inheritance</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+var CarPrototype = {
+    constructor: function(model) {
+        this.model = model;
+    },
+    sayName: function() {
+        console.log(this.model);
+    }
 };
-                 </code></pre>
+
+var car = Object.create(CarPrototype);
+car.constructor("Honda");
+car.sayName();
+            </code></pre>
             </section>
             <section>
-                <pre><code class="hljs javascript" data-trim data-line-numbers="">
-function Gizmo(id) {
-    this.id = id;
+                <h3>Prototypal Inheritance</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+var HondaPrototype = Object.create(CarPrototype);
+HondaPrototype.constructor = function(color) {
+    CarPrototype.constructor.call(this, "Honda");
+    this.color = color;
 }
-                 </code></pre>
-                <img src="gizmo1.png" alt=""/>
-            </section>
-            <section>
-                <pre><code class="hljs javascript" data-trim data-line-numbers="">
-function Gizmo(id) {
-    this.id = id;
+HondaPrototype.sayName = function() {
+    console.log(this.color + ' ' + this.model);
 }
 
-Gizmo.prototype.toString = function () {
-    return "Gizmo " + this.id;
-};
-                 </code></pre>
-                <img src="gizmo2.png" alt=""/>
-            </section>
-            <section>
-                <pre><code class="hljs javascript" data-trim data-line-numbers="">
-function Gizmo(id) {
-    this.id = id;
-}
-
-Gizmo.prototype.toString = function () {
-    return "Gizmo " + this.id;
-};
-                 </code></pre>
-                <img src="gizmo3.png" alt=""/>
-            </section>
-            <section>
-                <pre><code class="hljs javascript" data-trim data-line-numbers="">
-function Gizmo(id) {
-    this.id = id;
-}
-
-Gizmo.prototype.toString = function () {
-    return "Gizmo " + this.id;
-};
-                 </code></pre>
-                <img src="gizmo4.png" alt=""/>
+var honda = Object.create(HondaPrototype);
+honda.constructor("Red");
+honda.sayName();
+            </code></pre>
             </section>
         </section>
         <section>
             <section>
-                <h3>Pseudoclassical Inheritance</h3>
-                <p>If we replace the original prototype
-                    object, then we can inherit another
-                    object's stuff.</p>
+                <h3>Classical Inheritance</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+var Car = function(model) {
+    this.model = model;
+}
+Car.prototype.sayName = function() {
+    console.log(this.model);
+}
+
+var car = new Car("Honda");
+car.sayName();
+            </code></pre>
             </section>
             <section>
-                <pre><code class="hljs javascript" data-trim data-line-numbers="">
-function Hoozit(id) {
-    this.id = id;
-}
-                 </code></pre>
-                <img src="hoozit1.png" alt=""/>
-            </section>
-            <section>
-                <pre><code class="hljs javascript" data-trim data-line-numbers="">
-function Hoozit(id) {
-    this.id = id;
-}
-Hoozit.prototype = new Gizmo();
-Hoozit.prototype.test = function (id) {
-    return this.id === id;
+                <h3>Classical Inheritance</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers>
+var Honda = function(color) {
+    this.color = color;
 };
-                 </code></pre>
-                <img src="hoozit2.png" alt=""/>
-            </section>
-            <section>
-                <pre><code class="hljs javascript" data-trim data-line-numbers="">
-function Hoozit(id) {
-    this.id = id;
+Honda.prototype = Object.create(Car.prototype);
+Honda.prototype.constructor = Honda;
+// Honda.__proto__ = Car;
+Honda.prototype.sayName = function() {
+    console.log(this.color + ' ' + this.model);
 }
-Hoozit.prototype = new Gizmo();
-Hoozit.prototype.test = function (id) {
-    return this.id === id;
-};
-                 </code></pre>
-                <img src="hoozit3.png" alt=""/>
+
+var honda = new Honda("Red");
+honda.sayName();
+            </code></pre>
             </section>
-            <section>
-                <h3>Pseudoclassical Inheritance</h3>
-                <pre><code class="hljs javascript" data-trim data-line-numbers="">
-function Gizmo(id) {
-    this.id = id;
+        </section>
+        <section>
+            <pre><code class="hljs javascript" data-trim data-line-numbers>
+class Car {
+    constructor(model) {
+        this.model = model;
+    }
+    sayName() {
+        console.log(this.model);
+    }
 }
-Gizmo.prototype.toString = function () {
-    return "Gizmo " + this.id;
-};
-                 </code></pre>
-                <pre><code class="hljs javascript" data-trim data-line-numbers="">
-function Hoozit(id) {
-    this.id = id;
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers>
+class Honda extends Car {
+    constructor(color) {
+        super("Honda");
+        this.color = color;
+    }
+    sayName() {
+        console.log(`${this.color} ${this.model}`);
+    }
 }
-Hoozit.prototype = new Gizmo();
-Hoozit.prototype.test = function (id) {
-    return this.id === id;
-};
-                 </code></pre>
-            </section>
+            </code></pre>
         </section>
         <section><h1>[WIP]</h1></section>
     </div>
