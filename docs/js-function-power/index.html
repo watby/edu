@@ -192,6 +192,25 @@ function …
             </section>
             <section>
                 <h3>A Module Pattern</h3>
+                <pre><code class="hljs javascript" data-trim data-line-numbers="">
+(function () {
+    var privateVariable;
+    function privateFunction(x) {
+    ...privateVariable...
+    }
+    GLOBAL.methodical = {
+        firstMethod: function (a, b) {
+        ...privateVariable...
+        },
+        secondMethod: function (c) {
+        ...privateFunction()...
+        }
+    };
+}());
+                </code></pre>
+            </section>
+            <section>
+                <h3>A Module Pattern</h3>
                 <pre><code class="hljs javascript" data-trim data-line-numbers>
 var singleton = (function () {
     var privateVariable;
@@ -210,22 +229,32 @@ var singleton = (function () {
                 </code></pre>
             </section>
             <section>
-                <h3>A Module Pattern</h3>
-                <pre><code class="hljs javascript" data-trim data-line-numbers="">
-(function () {
-    var privateVariable;
-    function privateFunction(x) {
+                <h3>ES Module</h3>
+                <pre><code class="hljs javascript font-smaller" data-trim data-line-numbers>
+// myModule1.js or myModule1.mjs
+
+var privateVariable;
+function privateFunction(x) {
+...privateVariable...
+}
+
+export default function firstMethod(a, b) {
     ...privateVariable...
-    }
-    GLOBAL.methodical = {
-        firstMethod: function (a, b) {
-        ...privateVariable...
-        },
-        secondMethod: function (c) {
-        ...privateFunction()...
-        }
-    };
-}());
+};
+export secondMethod = function secondMethod(c) {
+    ...privateFunction()...
+};
+                </code></pre>
+                <pre><code class="hljs javascript font-smaller" data-trim data-line-numbers>
+// myModule2.js
+
+import firstMethod from "./myModule1";
+import { secondMethod } from "./myModule1";
+import * as myModule1 from "./myModule1";
+
+firstMethod();
+secondMethod();
+myModule1.secondMethod();
                 </code></pre>
             </section>
         </section>
@@ -431,7 +460,6 @@ honda.sayName();
             <section data-background="CarHondaProto8.png" data-background-size="80%" data-background-position="center">
             </section>
         </section>
-        <section><h1>[WIP]</h1></section>
     </div>
 </div>
 
