@@ -407,6 +407,9 @@ var Honda = function(color) {
 
 Honda.prototype = Object.create(Car.prototype);
 Honda.prototype.constructor = Honda;
+Honda.prototype.sayName = function sayName() {
+    console.log(this.color + ' ' + this.model);
+};
                 </code></pre>
             </section>
             <section data-background="CarHondaProto6.png" data-background-size="50%" data-background-position="right">
@@ -425,39 +428,19 @@ var Honda = function(color) {
 
 Honda.prototype = Object.create(Car.prototype);
 Honda.prototype.constructor = Honda;
+Honda.prototype.sayName = function sayName() {
+    console.log(this.color + ' ' + this.model);
+};
 
 var honda = new Honda("Red");
-honda.sayName();
-                </code></pre>
-            </section>
-            <section data-background="CarHondaProto6.png" data-background-size="50%" data-background-position="right">
-                <pre><code class="hljs javascript half-width font-smaller" data-trim data-line-numbers>
-class Car {
-    constructor(model) {
-        this.model = model;
-    }
-    sayName() {
-        console.log(this.model);
-    }
-}
-
-class Honda extends Car {
-    constructor(color) {
-        super("Honda");
-        this.color = color;
-    }
-    sayName() {
-        console.log(`${this.color} ${this.model}`);
-    }
-}
-
-let honda = new Honda("Red");
 honda.sayName();
                 </code></pre>
             </section>
             <section data-background="CarHondaProto7.png" data-background-size="80%" data-background-position="center">
             </section>
             <section data-background="CarHondaProto8.png" data-background-size="80%" data-background-position="center">
+            </section>
+            <section data-background="CarHondaProto9.png" data-background-size="80%" data-background-position="center">
             </section>
         </section>
     </div>
