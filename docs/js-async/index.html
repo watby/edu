@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>JavaScript - Asynchronous life</title>
+
+    <link rel="stylesheet" href="../reveal/css/reset.css">
+    <link rel="stylesheet" href="../reveal/css/reveal.css">
+    <link rel="stylesheet" href="../reveal/css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="../reveal/lib/css/monokai.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../reveal/css/print/pdf.css' : '../reveal/css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Asynchronous life</h3>
+        </section>
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Lives in ecosystem</h3>
+            <ul>
+                <li class="fragment"><a href="https://spec.whatwg.org">
+                    WHATWG Standards
+                </a></li>
+                <li class="fragment"><a href="https://developer.mozilla.org/en-US/docs/Web/API">
+                    Web APIs
+                </a></li>
+            </ul>
+            <aside class="notes">
+                <a href="https://github.com/whatwg">WHATWG repo</a>
+            </aside>
+        </section>
+        <section>
+            <h1>JavaScript</h1>
+            <h3>Is Single Threaded</h3>
+        </section>
+        <section>
+            <img src="js-internals-1.png" alt="Sync JS Internals"/>
+        </section>
+        <section data-background="js-call-stack.png" data-background-size="200px" data-background-position="right">
+            <h3>The call stack</h3>
+            <pre style="width: 50%"><code class="hljs javascript" data-trim>
+function tenth() { }
+function ninth() { tenth() }
+function eigth() { ninth() }
+function seventh() { eigth() }
+function sixth() { seventh() }
+function fifth() { sixth() }
+function fourth() { fifth() }
+function third() { fourth() }
+function second() { third() }
+function first() { second() }
+first();
+            </code></pre>
+        </section>
+        <section>
+            <h1>The call stack</h1>
+            <h3>one thread == one call stack == one thing at a time</h3>
+        </section>
+        <section>
+            <h3>Synchronous</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers="">
+console.log("Hi");
+console.log("Bye");
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers="">
+console.log('Hi');
+setTimeout(function cb1() {
+    console.log('cb1');
+}, 5000);
+console.log('Bye');
+            </code></pre>
+        </section>
+        <section>
+            <h3>Single Threaded?</h3>
+            <p>Timeout</p>
+            <pre><code class="hljs javascript" data-trim>
+setTimeout
+setInterval
+            </code></pre>
+            <p class="fragment">I/O</p>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+XMLHttpRequest
+            </code></pre>
+            <p class="fragment">
+                <a href="https://developer.mozilla.org/en-US/docs/Web/Events">DOM events</a>
+            </p>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+click
+            </code></pre>
+        </section>
+        <section>
+            <img src="js-internals-2.png" alt="JS Internals"/>
+        </section>
+        <section>
+            <h3>Event Loop has a Task Queue</h3>
+            <img src="js-event-queue.png" alt="Event queue"/>
+        </section>
+        <section>
+            <pre><code class="hljs javascript" data-trim>
+console.log('Hi');
+setTimeout(function cb1() {
+    console.log('cb1');
+}, 5000);
+console.log('Bye');
+            </code></pre>
+            <img src="js-event-loop.gif" alt="Event loop"/>
+        </section>
+        <section>
+            <h3>Playground</h3>
+            <p><a href="https://scrimba.com/c/czNGrecZ">Let's play</a></p>
+        </section>
+        <section>
+            <pre><code class="hljs javascript" data-trim>
+fetch(url, callback)
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim>
+fetch(url).then(callback)
+            </code></pre>
+            <p class="fragment">Like a Task?</p>
+        </section>
+        <section>
+            <h3>promise.js</h3>
+            <pre><code class="hljs javascript" data-trim data-line-numbers="">
+function Promise(promiseFactory) {
+  var _this = this;
+  promiseFactory(function(value) {
+    _this.onResolve.call({}, value)
+  }, function(value) {
+    _this.onReject.call({}, value)
+  });
+}
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers="">
+Promise.prototype.then = function(onResolve, onReject) {
+  this.onResolve = onResolve;
+  this.onReject = onReject;
+}
+            </code></pre>
+            <pre class="fragment"><code class="hljs javascript" data-trim data-line-numbers="">
+const promise = new Promise(function(resolve, reject){
+  try {
+    fetch(url, resolve);
+  } catch (error) {
+    reject(error);
+  }
+})
+
+promise.then(
+  function(data){console.log('resolve', data)},
+  function(error){console.log('reject', error)}
+)
+            </code></pre>
+        </section>
+        <section>
+            <h3>Playground</h3>
+            <p><a href="https://www.jsv9000.app/">JavaScript Visualizer 9000</a></p>
+        </section>
+    </div>
+</div>
+
+<script src="../reveal/js/reveal.js"></script>
+
+<script>
+    // More info about config & dependencies:
+    // - https://github.com/hakimel/reveal.js#configuration
+    // - https://github.com/hakimel/reveal.js#dependencies
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        center: true,
+        hash: true,
+
+        transition: 'slide',
+
+        dependencies: [
+            {src: '../reveal/plugin/markdown/marked.js'},
+            {src: '../reveal/plugin/markdown/markdown.js'},
+            {src: '../reveal/plugin/notes/notes.js', async: true},
+            {src: '../reveal/plugin/highlight/highlight.js', async: true}
+        ]
+    });
+</script>
+</body>
+</html>
